@@ -32,11 +32,15 @@ points(getPoints(1,3), col = "orange")
 optimise(interval = c(0,1),f = likelihoodFunction, mC = 1, tC = 3, maximum = T, tol = 0.001)
 ```
 
-## ## Simulations with the methylation status of reads with given cytosines
+## Simulations with the methylation status of reads with given cytosines
+
+Here on bisulfite treatment, cytosine which is non-methylated is converted to tyrosine. The 100 - conversion rate tells us the fact that 
 
 ```{r meths}
 error.rates <- 0.02  ### Conversion of 98% 
 num.cytosines <- 4
+
+
 
 
 
