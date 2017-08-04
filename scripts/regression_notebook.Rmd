@@ -1,0 +1,94 @@
+---
+title: "Regression notebook"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Linear regression
+
+First, we are randomly selecting variables x1 and x2 using a function rnorm
+
+```{r regress, echo=TRUE}
+x1 <- rnorm(100, mean = 20, sd = 1)
+x2 <- rnorm(100, mean = 20, sd = 2)
+
+plot(x1, x2, pch = 19)
+
+abline(lm(x2 ~ x1), col = "red", lwd = 2)
+
+#plot(x1, poly(x1, 3, simple = T)[,3])
+
+```
+
+## Logic regression
+
+
+```{r generatelogit, echo=T}
+y <- rbinom(100,size = 1, prob = 0.5)
+df <- data.frame(x1 = x1, x2 = x2, y = as.factor(y))
+
+boxplot(x1 ~ y, data = df)
+```
+
+### Conditional density plot for the distribution
+cool plot!
+
+```{r condlogit}
+cdplot(y ~ x, data = df)
+
+```
+
+### Regression
+
+```{r logit}
+fit <- glm(y~x1, data = df,family=binomial())
+
+summary(fit) # display results
+confint(fit) # 95% CI for the coefficients
+exp(coef(fit)) # exponentiated coefficients
+exp(confint(fit)) # 95% CI for exponentiated coefficients
+#predict(fit, type="response") # predicted values
+#residuals(fit, type="deviance") # residuals
+```
+
+
+### Comparing the two regression fits using anova
+When you use anova(lm.1,lm.2,test="Chisq"), it performs the Chi-square test to compare lm.1 and lm.2 (i.e. it tests whether reduction in the residual sum of squares are statistically significant or not). Note that this makes sense only if lm.1 and lm.2 are nested models
+
+```{r compare}
+fit1 <- glm(y ~ x1, data = df, family = binomial())
+fit2 <- glm(y ~ x2, data = df, family = binomial())
+fit3 <- glm(y ~ x1 + x2, data = df, family = binomial())
+
+anova(fit1, fit2, fit3, test = "Chisq")
+```
+
+here above the above doesnt make sense because the models arent nested. 
+We can compare the nested models as defined below
+
+```{r nested}
+
+
+```
+
+
+
+
+
+
+## Poisson Regression
+```{r poisregress}
+
+
+```
+
+
+
+
+
+
+
