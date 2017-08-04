@@ -1,10 +1,16 @@
-### Bayesian on the error rates of methylation in reads
-##
-#
+---
+title: "Bayesian"
+output: pdf_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Simulations, with binomial probability distributions
-#
+
+
+```{r binomial}
 likelihoodFunction <- function(p, mC, tC){
   a <- choose(n = tC,k = mC)
   b <- p ^ mC
@@ -24,17 +30,15 @@ points(getPoints(40,100), col="red")   ## 4/10
 points(getPoints(1,3), col = "orange")
 
 optimise(interval = c(0,1),f = likelihoodFunction, mC = 1, tC = 3, maximum = T, tol = 0.001)
+```
 
+## ## Simulations with the methylation status of reads with given cytosines
 
-
-## Simulations with the methylation status of reads with given cytosines
-#
+```{r meths}
 error.rates <- 0.02  ### Conversion of 98% 
 num.cytosines <- 4
 
 
 
 
-
-
-
+```
